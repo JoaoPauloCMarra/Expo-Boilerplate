@@ -19,19 +19,49 @@ export type Props = TextProps & {
 	as?: keyof typeof allowedComponents;
 	variant?: 'primary' | 'secondary' | 'successful' | 'destructive' | 'light';
 	size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
+	bold?: boolean;
+	italic?: boolean;
+	underline?: boolean;
 };
 
-const Text = ({ variant = 'primary', size = 'md', as = 'span', ...props }: Props) => {
+const Text = (props: Props) => {
+	const { variant = 'primary', size = 'md', as = 'span', bold, italic, underline } = props;
 	const Component = allowedComponents[as];
-	return <Component {...props} style={[styles.base, styles[variant], styles[size], props.style]} />;
+	return (
+		<Component
+			{...props}
+			style={[
+				styles.base,
+				styles[variant],
+				styles[size],
+				bold && styles.bold,
+				italic && !bold && styles.italic,
+				italic && bold && styles.italicBold,
+				underline && styles.underline,
+				props.style
+			]}
+		/>
+	);
 };
 
 export default Text;
 
 const styles = StyleSheet.create({
 	base: {
-		fontFamily: 'Inter_400Regular',
+		fontFamily: 'Montserrat-Regular',
 		fontWeight: 'normal'
+	},
+	bold: {
+		fontFamily: 'Montserrat-SemiBold'
+	},
+	italic: {
+		fontFamily: 'Montserrat-Italic'
+	},
+	italicBold: {
+		fontFamily: 'Montserrat-SemiBoldItalic'
+	},
+	underline: {
+		textDecorationLine: 'underline'
 	},
 	primary: {
 		color: colorPalette.foreground

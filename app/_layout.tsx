@@ -2,9 +2,9 @@ import './global.css';
 
 import type { PropsWithChildren } from 'react';
 import { useEffect } from 'react';
-import { useFonts, Inter_400Regular } from '@expo-google-fonts/inter';
 import NetInfo from '@react-native-community/netinfo';
 import { QueryClient, QueryClientProvider, onlineManager } from '@tanstack/react-query';
+import { useFonts } from 'expo-font';
 import { useLocales } from 'expo-localization';
 import { SplashScreen, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -33,7 +33,10 @@ const AppPreloader = ({ children }: PropsWithChildren) => {
 	const { setLocale } = useTranslations();
 
 	const [fontsLoaded, fontError] = useFonts({
-		Inter_400Regular
+		'Montserrat-Italic': require('@/assets/fonts/Montserrat-Italic.ttf'),
+		'Montserrat-Regular': require('@/assets/fonts/Montserrat-Regular.ttf'),
+		'Montserrat-SemiBold': require('@/assets/fonts/Montserrat-SemiBold.ttf'),
+		'Montserrat-SemiBoldItalic': require('@/assets/fonts/Montserrat-SemiBoldItalic.ttf')
 	});
 
 	useEffect(() => {

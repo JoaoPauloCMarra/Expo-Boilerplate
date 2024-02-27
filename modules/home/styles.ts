@@ -15,9 +15,8 @@ export default StyleSheet.create({
 	},
 	scrollView: {
 		flex: 1,
-		width: '100%',
+		width: '90%',
 		minHeight: 80,
-		maxWidth: 256,
 		marginVertical: 8
 	},
 	scrollViewContent: {
@@ -25,7 +24,6 @@ export default StyleSheet.create({
 		marginBottom: 16,
 		flex: 1,
 		width: '100%',
-		maxWidth: 256,
 		gap: 16
 	},
 	languageSwitcher: {

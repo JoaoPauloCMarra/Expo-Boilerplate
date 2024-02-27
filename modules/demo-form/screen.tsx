@@ -8,6 +8,7 @@ import Input from '@/components/input';
 import KeyboardAvoidContainer from '@/components/keyboard-avoid-container';
 import PageContainer from '@/components/page-container';
 import Text from '@/components/text';
+import styles from './styles';
 
 const schema = z.object({
 	firstName: z.string(),
@@ -34,15 +35,17 @@ const DemoForm = () => {
 	return (
 		<KeyboardAvoidContainer>
 			<PageContainer>
-				<View className="mx-auto w-full flex-1 items-center justify-center px-8">
-					<Text className="mb-4 text-2xl font-bold">Demo Form</Text>
+				<View style={styles.container}>
+					<Text style={styles.title} size="2xl" bold>
+						Demo Form1
+					</Text>
 					<Link href="/" asChild>
 						<Button variant="outline" size="lg">
 							Go to the Home Screen
 						</Button>
 					</Link>
 				</View>
-				<View className="mx-auto w-full max-w-sm flex-1 gap-4">
+				<View style={styles.form}>
 					<Controller
 						control={control}
 						rules={{

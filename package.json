@@ -33,7 +33,6 @@
     "bun": ">=1"
   },
   "dependencies": {
-    "@expo-google-fonts/inter": "^0.2.3",
     "@expo/html-elements": "^0.9.1",
     "@expo/react-native-action-sheet": "^4.0.1",
     "@expo/vector-icons": "^14.0.0",

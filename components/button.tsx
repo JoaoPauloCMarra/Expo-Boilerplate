@@ -14,7 +14,9 @@ const Button = forwardRef(
 	({ children, variant = 'primary', size = 'md', ...props }: Props, ref: Ref<View>) => (
 		<TouchableOpacity {...props} style={[styles.base, styles[variant], styles[size], props.style]}>
 			<View ref={ref} hitSlop={defaultHitSlop}>
-				<Text style={[textStyles[variant], textStyles[size]]}>{String(children)}</Text>
+				<Text bold style={textStyles[variant]} size="md">
+					{String(children)}
+				</Text>
 			</View>
 		</TouchableOpacity>
 	)
@@ -74,10 +76,6 @@ const styles = StyleSheet.create({
 });
 
 const textStyles = StyleSheet.create({
-	base: {
-		fontSize: 16,
-		fontWeight: '600'
-	},
 	primary: {
 		color: colorPalette['primary-foreground']
 	},
@@ -98,9 +96,5 @@ const textStyles = StyleSheet.create({
 	},
 	link: {
 		color: colorPalette.foreground
-	},
-	sm: {},
-	md: {},
-	lg: {},
-	icon: {}
+	}
 });

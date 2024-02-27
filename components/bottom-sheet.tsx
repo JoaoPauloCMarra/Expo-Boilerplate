@@ -119,7 +119,6 @@ const styles = StyleSheet.create({
 		borderTopLeftRadius: 24,
 		borderTopRightRadius: 24,
 		paddingTop: 16,
-
 		...styleSheetShadows.large
 	}
 });
