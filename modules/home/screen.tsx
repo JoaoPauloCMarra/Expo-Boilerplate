@@ -1,9 +1,11 @@
 import { isDevice } from 'expo-device';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StyleSheet, View } from 'react-native';
-import { colorPalette, styleSheetShadows } from '@/lib/constants';
+import { ScrollView } from 'react-native-gesture-handler';
+import { StyleSheetBorderRadius, styleSheetShadows } from '@/lib/constants';
 import Button from '@/components/button';
 import ThunderIcon from '@/components/icons/thunder-icon';
+import Input from '@/components/input';
 import KeyBoardAvoidContainer from '@/components/keyboard-avoid-container';
 import PageContainer from '@/components/page-container';
 import Text from '@/components/text';
@@ -12,8 +14,7 @@ import useHomePage from './useHomePage';
 
 const styles = StyleSheet.create({
 	keyBoardAvoidContainer: {
-		flex: 1,
-		backgroundColor: colorPalette.background
+		flex: 1
 	},
 	content: {
 		flex: 1,
@@ -30,6 +31,8 @@ const styles = StyleSheet.create({
 	},
 	linearGradientContainer: {
 		height: 160,
+		borderRadius: StyleSheetBorderRadius.medium,
+		overflow: 'hidden',
 		width: '100%'
 	},
 	svgContainer: {
@@ -38,13 +41,31 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 		gap: 8,
-		borderRadius: 16,
-		backgroundColor: '#999'
+		borderRadius: StyleSheetBorderRadius.medium,
+		backgroundColor: '#CBD5E1'
 	},
 	thunderIcon: {
 		width: 64,
 		height: 64,
-		...styleSheetShadows.medium
+		...styleSheetShadows.small
+	},
+	form: {
+		width: '100%',
+		gap: 4
+	},
+	scrollView: {
+		flex: 1,
+		width: '100%',
+		minHeight: 80,
+		maxWidth: 256,
+		marginVertical: 8
+	},
+	scrollViewContainer: {
+		marginBottom: 16,
+		flex: 1,
+		width: '100%',
+		maxWidth: 256,
+		gap: 16
 	}
 });
 
@@ -52,19 +73,19 @@ const HomeScreen = () => {
 	const { locale, t } = useTranslations();
 	const {
 		sampleText,
-		// inputPostId,
-		// post,
-		// postsError,
-		// postsAreFetching,
+		inputPostId,
+		post,
+		postsError,
+		postsAreFetching,
 
-		onSwitchLocale
-		// onIdInputChange,
-		// onApiCallPress
+		onSwitchLocale,
+		onIdInputChange,
+		onApiCallPress
 	} = useHomePage();
 
 	return (
 		<PageContainer>
-			<KeyBoardAvoidContainer style={styles.keyBoardAvoidContainer}>
+			<KeyBoardAvoidContainer style={styles.keyBoardAvoidContainer} behavior="position">
 				<View style={styles.content}>
 					<Text size="2xl">Onboarding</Text>
 					<View>
@@ -98,48 +119,48 @@ const HomeScreen = () => {
 						<Text size="sm">svg rendered</Text>
 						<ThunderIcon style={styles.thunderIcon} fill="#fbbf24" stroke="#f59e0b" />
 					</View>
-					{/* 
-					
-					
-					<View className="mt-2 flex size-32 items-center justify-center gap-4 rounded-lg bg-slate-400">
-						<Text className="text-xs text-slate-800">svg rendered</Text>
-						<ThunderIcon className="ios:shadow-md android:shadow-md size-12 fill-amber-400 stroke-amber-500 web:drop-shadow-md" />
-					</View>
-					<View className="w-full items-center">
-						<LinearGradientRect
-							className="my-4 size-10"
-							colors={['rgba(0,0,0,0.8)', 'transparent']}
+
+					<View style={styles.form}>
+						<Input
+							keyboardType="numeric"
+							returnKeyType="done"
+							placeholder="Post ID"
+							value={inputPostId ? String(inputPostId) : ''}
+							onChangeText={onIdInputChange}
+							onReturnPressed={onApiCallPress}
 						/>
+						<Button onPress={onApiCallPress}>{`API Call for ${String(inputPostId)}`}</Button>
 					</View>
+
 					<ScrollView
-						className="my-2 min-h-20 w-full max-w-64 flex-1"
+						style={styles.scrollView}
 						showsVerticalScrollIndicator={false}
 						showsHorizontalScrollIndicator={false}
 						bounces={false}
+						contentContainerStyle={styles.scrollViewContainer}
 					>
-						<View className="mb-4 flex w-full max-w-64 gap-4">
-							<Input
-								keyboardType="numeric"
-								returnKeyType="done"
-								placeholder="Post ID"
-								value={inputPostId ? String(inputPostId) : ''}
-								onChangeText={onIdInputChange}
-								onReturnPressed={onApiCallPress}
-							/>
-							<Button
-								className="w-full"
-								onPress={onApiCallPress}
-							>{`API Call for ${String(inputPostId)}`}</Button>
-							{postsAreFetching ? <Text>loading...</Text> : null}
-							{!postsAreFetching && postsError ? (
-								<Text>{JSON.stringify(postsError, null, 2)}</Text>
-							) : null}
-							{!postsAreFetching && post.id ? (
-								<View key={post.id} className="my-2 rounded-lg border px-2 py-1">
-									<Text>{post.title}</Text>
-								</View>
-							) : null}
-						</View>
+						{postsAreFetching ? <Text>loading...</Text> : null}
+						{!postsAreFetching && postsError ? (
+							<Text>{JSON.stringify(postsError, null, 2)}</Text>
+						) : null}
+						{!postsAreFetching && post.id ? (
+							<View key={post.id}>
+								{/* className="my-2 rounded-lg border px-2 py-1" */}
+								<Text>{post.title}</Text>
+							</View>
+						) : null}
+					</ScrollView>
+				</View>
+			</KeyBoardAvoidContainer>
+		</PageContainer>
+	);
+};
+
+export default HomeScreen;
+
+/* 
+							
+
 						<View className="flex w-full flex-1 items-center">
 							<View className="flex w-full max-w-64 flex-col gap-4">
 								<Button
@@ -197,11 +218,4 @@ const HomeScreen = () => {
 							</View>
 						</View>
 					</ScrollView>
-				*/}
-				</View>
-			</KeyBoardAvoidContainer>
-		</PageContainer>
-	);
-};
-
-export default HomeScreen;
+				*/

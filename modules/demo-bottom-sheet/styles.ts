@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { StyleSheetBorderRadius } from '@/lib/constants';
 
 export default StyleSheet.create({
 	container: {
@@ -31,7 +32,7 @@ export default StyleSheet.create({
 		marginTop: 8,
 		width: 32,
 		height: 32,
-		borderRadius: 16,
+		borderRadius: StyleSheetBorderRadius.medium,
 		backgroundColor: 'slategray'
 	},
 	buttonContainer: {

@@ -1,8 +1,7 @@
 import type { KeyboardEvent, Ref } from 'react';
 import { forwardRef, useState } from 'react';
-import { TextInput } from 'react-native';
-import { isWeb } from '@/lib/constants';
-import { cn } from '../lib/utils';
+import { StyleSheet, TextInput } from 'react-native';
+import { StyleSheetBorderRadius, colorPalette, isWeb } from '@/lib/constants';
 import type {
 	NativeSyntheticEvent,
 	TextInputEndEditingEventData,
@@ -43,7 +42,7 @@ type Props = TextInputProps & {
 };
 
 const Input = forwardRef((props: Props, ref: Ref<TextInput>) => {
-	const { className, defaultValue, keyboardType, onReturnPressed } = props;
+	const { style, defaultValue, keyboardType, onReturnPressed } = props;
 	const { value, onChange } = useInput({ defaultValue, keyboardType });
 
 	const onKeyPress = (e: TextInputKeyPressEvent) => {
@@ -68,17 +67,28 @@ const Input = forwardRef((props: Props, ref: Ref<TextInput>) => {
 		<TextInput
 			{...props}
 			ref={ref}
-			className={cn(
-				'h-8 rounded-lg border border-input bg-background px-2 py-0 text-foreground outline-none placeholder:text-slate-400',
-				className
-			)}
+			style={[styles.base, style]}
 			value={value}
 			onChangeText={onChangeText}
 			onKeyPress={(e) => onKeyPress(e as TextInputKeyPressEvent)}
 			onEndEditing={(e) => onEndEditing(e as TextInputEndEditingEvent)}
+			placeholderTextColor={colorPalette.input}
 		/>
 	);
 });
 Input.displayName = 'Input';
 
 export default Input;
+
+const styles = StyleSheet.create({
+	base: {
+		height: 40,
+		backgroundColor: colorPalette.background,
+		borderRadius: StyleSheetBorderRadius.large,
+		borderWidth: 1,
+		borderColor: colorPalette.input,
+		color: colorPalette.foreground,
+		paddingHorizontal: 8,
+		paddingVertical: 0
+	}
+});

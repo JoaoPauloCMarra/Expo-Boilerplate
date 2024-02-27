@@ -48,9 +48,18 @@ export const styleSheetShadows = {
 		elevation: 24
 	}
 };
-export const backdropBgColor = 'rgba(0,0,0,0.4)';
+export const StyleSheetBorderRadius = {
+	small: 8,
+	medium: 12,
+	large: 16,
+	full: 50
+};
 
 export const colorPalette = {
+	transparent: 'transparent',
+	black: 'black',
+	white: 'white',
+
 	background: '#F3F4F6',
 	foreground: '#1F2937',
 	card: '#FFFFFF',

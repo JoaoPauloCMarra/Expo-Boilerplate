@@ -1,7 +1,7 @@
 import type { Ref } from 'react';
 import { forwardRef } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { colorPalette, defaultHitSlop } from '@/lib/constants';
+import { StyleSheetBorderRadius, colorPalette, defaultHitSlop } from '@/lib/constants';
 import Text from './text';
 import type { TouchableOpacityProps } from 'react-native';
 
@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
 		flexShrink: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
-		borderRadius: 8,
-		backgroundColor: 'transparent',
+		borderRadius: StyleSheetBorderRadius.small,
+		backgroundColor: colorPalette.transparent,
 		zIndex: 10
 	},
 	primary: {
@@ -79,16 +79,16 @@ const textStyles = StyleSheet.create({
 		fontWeight: '600'
 	},
 	primary: {
-		color: colorPalette.background
+		color: colorPalette['primary-foreground']
 	},
 	secondary: {
-		color: colorPalette.background
+		color: colorPalette['secondary-foreground']
 	},
 	successful: {
-		color: colorPalette.background
+		color: colorPalette['successful-foreground']
 	},
 	destructive: {
-		color: colorPalette.background
+		color: colorPalette['destructive-foreground']
 	},
 	outline: {
 		color: colorPalette.primary
