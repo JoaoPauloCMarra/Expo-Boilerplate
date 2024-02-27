@@ -1,0 +1,10 @@
+/.expo
+/.github
+/.husky
+/android
+/assets
+/dist
+/ios
+/node_modules
+/public
+package.json

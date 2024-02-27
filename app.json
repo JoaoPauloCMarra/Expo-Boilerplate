@@ -1,0 +1,77 @@
+{
+	"expo": {
+		"name": "Expo Boilerplate",
+		"slug": "expo-boilerplate",
+		"scheme": "expo-boilerplate",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./assets/images/icon.png",
+		"userInterfaceStyle": "automatic",
+		"primarycolor": "#60A5FA",
+		"jsEngine": "hermes",
+		"platforms": ["ios", "android", "web"],
+		"splash": {
+			"image": "./assets/images/splash.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#ffffff"
+		},
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"supportsTablet": true,
+			"bundleIdentifier": "com.boilerplate.jpcm",
+			"infoPlist": {
+				"NSCameraUsageDescription": "NSCameraUsageDescription",
+				"NSMicrophoneUsageDescription": "NSMicrophoneUsageDescription"
+			}
+		},
+		"android": {
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/images/adaptive-icon.png",
+				"backgroundColor": "#ffffff"
+			},
+			"package": "com.boilerplate.jpcm"
+		},
+		"web": {
+			"bundler": "metro",
+			"favicon": "./assets/images/favicon.png"
+		},
+		"plugins": [
+			[
+				"expo-build-properties",
+				{
+					"ios": {
+						"flipper": true
+					}
+				}
+			],
+			"expo-font",
+			"expo-router",
+			"expo-localization",
+			"expo-secure-store",
+			[
+				"expo-camera",
+				{
+					"cameraPermission": "Allow $(PRODUCT_NAME) to access your camera.",
+					"microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone"
+				}
+			],
+			[
+				"expo-image-picker",
+				{
+					"photosPermission": "Allow $(PRODUCT_NAME) to access your photos"
+				}
+			]
+		],
+		"experiments": {
+			"typedRoutes": true
+		},
+		"extra": {
+			"router": {
+				"origin": false
+			},
+			"eas": {
+				"projectId": "8450ac41-4532-4e67-8e9c-a51125b5a2e8"
+			}
+		}
+	}
+}

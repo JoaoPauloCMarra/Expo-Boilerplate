@@ -1,0 +1,40 @@
+name: Build the app
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+jobs:
+  install_build_test:
+    strategy:
+      matrix:
+        version: [18.x]
+        bun: [latest]
+        os: [ubuntu-latest]
+    name: Building and Testing...
+    timeout-minutes: 60
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Bun
+        id: setup-bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: ${{ matrix.bun }}
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-${{ matrix.bun }}-bun-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.bun }}-bun-
+
+      - name: Install dependencies
+        if: steps.setup-bun.outputs.cache-hit != 'true'
+        run: bun install --frozen-lockfile --ignore-scripts
+
+      - name: Unit Tests
+        run: bun test:unit:ci
