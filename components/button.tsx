@@ -1,5 +1,5 @@
 import type { Ref } from 'react';
-import { forwardRef } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { StyleSheetBorderRadius, colorPalette, defaultHitSlop } from '@/lib/constants';
 import Text from './text';
@@ -11,15 +11,22 @@ type Props = TouchableOpacityProps & {
 };
 
 const Button = forwardRef(
-	({ children, variant = 'primary', size = 'md', ...props }: Props, ref: Ref<View>) => (
-		<TouchableOpacity {...props} style={[styles.base, styles[variant], styles[size], props.style]}>
-			<View ref={ref} hitSlop={defaultHitSlop}>
-				<Text bold style={textStyles[variant]} size="md">
-					{String(children)}
-				</Text>
-			</View>
-		</TouchableOpacity>
-	)
+	({ children, variant = 'primary', size = 'md', ...props }: Props, ref: Ref<View>) => {
+		const flattenStyle = useMemo(
+			() => StyleSheet.flatten([styles.base, styles[variant], styles[size], props.style]),
+			[props.style, size, variant]
+		);
+
+		return (
+			<TouchableOpacity {...props} style={flattenStyle}>
+				<View ref={ref} hitSlop={defaultHitSlop}>
+					<Text bold style={textStyles[variant]} size="md">
+						{String(children)}
+					</Text>
+				</View>
+			</TouchableOpacity>
+		);
+	}
 );
 Button.displayName = 'Button';
 

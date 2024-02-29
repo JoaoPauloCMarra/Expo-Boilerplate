@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Span, P, A, H1, H2, H3, H4 } from '@expo/html-elements';
 import { StyleSheet, type TextProps } from 'react-native';
 import { colorPalette } from '@/lib/constants';
@@ -27,10 +28,9 @@ export type Props = TextProps & {
 const Text = (props: Props) => {
 	const { variant = 'primary', size = 'md', as = 'span', bold, italic, underline } = props;
 	const Component = allowedComponents[as];
-	return (
-		<Component
-			{...props}
-			style={[
+	const flattenStyle = useMemo(
+		() =>
+			StyleSheet.flatten([
 				styles.base,
 				styles[variant],
 				styles[size],
@@ -39,9 +39,11 @@ const Text = (props: Props) => {
 				italic && bold && styles.italicBold,
 				underline && styles.underline,
 				props.style
-			]}
-		/>
+			]),
+		[bold, italic, props.style, size, underline, variant]
 	);
+
+	return <Component {...props} style={flattenStyle} />;
 };
 
 export default Text;

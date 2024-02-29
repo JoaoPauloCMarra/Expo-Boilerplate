@@ -1,13 +1,14 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-	container: {
+	header: {
 		alignItems: 'center',
 		justifyContent: 'center',
 		padding: 32
 	},
 	title: {
-		marginBottom: 16
+		marginBottom: 16,
+		textAlign: 'center'
 	},
 	form: {
 		flex: 1,

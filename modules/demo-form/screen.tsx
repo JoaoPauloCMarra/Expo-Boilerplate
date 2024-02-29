@@ -35,7 +35,7 @@ const DemoForm = () => {
 	return (
 		<KeyboardAvoidContainer>
 			<PageContainer>
-				<View style={styles.container}>
+				<View style={styles.header}>
 					<Text style={styles.title} size="2xl" bold>
 						Demo Form1
 					</Text>

@@ -12,7 +12,7 @@ type Props = Omit<ErrorBoundaryProps, 'retry'> & {
 const ErrorBoundary = (props: Props) => (
 	<PageContainer>
 		<View style={styles.container}>
-			<Text variant="destructive" size="2xl">
+			<Text variant="destructive" size="xl">
 				{String(props.error.message)}
 			</Text>
 			<View style={styles.actions}>

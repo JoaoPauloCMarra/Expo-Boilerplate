@@ -3,6 +3,7 @@ import { isDevice } from 'expo-device';
 import * as ImagePicker from 'expo-image-picker';
 import { Link } from 'expo-router';
 import { Image, View } from 'react-native';
+import { isExpoGo } from '@/lib/constants';
 import { vibrate } from '@/lib/utils';
 import Button from '@/components/button';
 import ErrorBoundary from '@/components/error-boundary';
@@ -13,7 +14,7 @@ const DemoImagePicker = () => {
 	const [image, setImage] = useState<string | null>(null);
 	const [permission, requestPermission] = ImagePicker.useCameraPermissions();
 
-	if (!isDevice) {
+	if (!isExpoGo && !isDevice) {
 		return <ErrorBoundary error={Error('This screen only works on a real device')} />;
 	}
 

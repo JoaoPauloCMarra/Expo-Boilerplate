@@ -2,12 +2,54 @@ import { useRef, useState } from 'react';
 import { Camera, CameraType, ImageType } from 'expo-camera';
 import { isDevice } from 'expo-device';
 import { Link } from 'expo-router';
-import { ActivityIndicator, Image, View } from 'react-native';
+import { ActivityIndicator, Image, StyleSheet, View } from 'react-native';
+import { StyleSheetBorderRadius, colorPalette, isExpoGo } from '@/lib/constants';
 import { vibrate } from '@/lib/utils';
 import Button from '@/components/button';
 import ErrorBoundary from '@/components/error-boundary';
 import PageContainer from '@/components/page-container';
 import Text from '@/components/text';
+
+const styles = StyleSheet.create({
+	container: {
+		alignItems: 'center',
+		justifyContent: 'center',
+		padding: 32
+	},
+	title: {
+		marginBottom: 16,
+		textAlign: 'center'
+	},
+	content: {
+		flex: 1,
+		padding: 16
+	},
+	cameraContainer: {
+		flex: 1,
+		overflow: 'hidden',
+		borderRadius: StyleSheetBorderRadius.medium,
+		backgroundColor: 'black'
+	},
+	cameraLoadingContainer: {
+		alignItems: 'center',
+		justifyContent: 'center',
+		position: 'relative',
+		height: '100%',
+		width: '100%'
+	},
+	cameraToolbar: {
+		position: 'absolute',
+		bottom: 4,
+		right: 4,
+		gap: 4,
+		zIndex: 10
+	},
+	camera: {
+		flex: 1,
+		width: '100%',
+		height: '100%'
+	}
+});
 
 const DemoCamera = () => {
 	const [cameraReady, setCameraReady] = useState(false);
@@ -16,7 +58,7 @@ const DemoCamera = () => {
 	const [permission, requestPermission] = Camera.useCameraPermissions();
 	const cameraRef = useRef<Camera>(null);
 
-	if (!isDevice) {
+	if (!isExpoGo && !isDevice) {
 		return <ErrorBoundary error={Error('This screen only works on a real device')} />;
 	}
 
@@ -43,8 +85,8 @@ const DemoCamera = () => {
 
 	return (
 		<PageContainer>
-			<View className="mx-auto w-full items-center justify-center px-8">
-				<Text className="mb-4 text-2xl font-bold">
+			<View style={styles.container}>
+				<Text style={styles.title} size="2xl" bold>
 					{`Camera Demo | Permission: ${permission?.status}`}
 				</Text>
 				<Link href="/" asChild>
@@ -53,37 +95,33 @@ const DemoCamera = () => {
 					</Button>
 				</Link>
 			</View>
-			<View className="w-full flex-1 p-4">
-				<View className="size-full flex-1 items-center justify-center overflow-hidden rounded-lg bg-slate-900">
+			<View style={styles.content}>
+				<View style={styles.cameraContainer}>
 					{!cameraReady ? (
-						<View className="flex-1 justify-end">
-							<ActivityIndicator size="large" className="bg-black text-white" />
+						<View style={styles.cameraLoadingContainer}>
+							<ActivityIndicator size="large" color={colorPalette.accent} />
 						</View>
 					) : null}
 					<Camera
 						ref={cameraRef}
 						type={type}
 						onCameraReady={() => setCameraReady(true)}
-						style={{
-							flex: 1,
-							width: '100%',
-							height: '100%',
-							opacity: cameraReady ? 1 : 0
-						}}
-					>
-						{picture ? (
-							<View className="relative size-full bg-black/50">
-								<View className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg border-2 border-primary">
-									<View className="size-80 bg-background shadow">
-										<Image source={{ uri: picture }} className="size-full" resizeMode="cover" />
-										<View className="absolute right-1 top-1">
-											<Button onPress={() => setPicture(null)}>close</Button>
-										</View>
+						style={[styles.camera, { opacity: !cameraReady ? 0 : 1 }]}
+					></Camera>
+					{picture ? (
+						<View className="relative size-full bg-black/50">
+							<View className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg border-2 border-primary">
+								<View className="size-80 bg-background shadow">
+									<Image source={{ uri: picture }} className="size-full" resizeMode="cover" />
+									<View className="absolute right-1 top-1">
+										<Button onPress={() => setPicture(null)}>close</Button>
 									</View>
 								</View>
 							</View>
-						) : null}
-						<View className="absolute bottom-1 right-1 gap-4">
+						</View>
+					) : null}
+					{cameraReady ? (
+						<View style={styles.cameraToolbar}>
 							<Button onPress={toggleCameraType} variant="secondary">
 								Flip Camera
 							</Button>
@@ -91,7 +129,7 @@ const DemoCamera = () => {
 								Snap Photo
 							</Button>
 						</View>
-					</Camera>
+					) : null}
 				</View>
 			</View>
 		</PageContainer>
