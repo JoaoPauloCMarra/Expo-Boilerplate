@@ -7,7 +7,6 @@
 		"orientation": "portrait",
 		"icon": "./assets/images/icon.png",
 		"userInterfaceStyle": "automatic",
-		"primarycolor": "#60A5FA",
 		"jsEngine": "hermes",
 		"platforms": ["ios", "android", "web"],
 		"splash": {
@@ -22,6 +21,14 @@
 			"infoPlist": {
 				"NSCameraUsageDescription": "NSCameraUsageDescription",
 				"NSMicrophoneUsageDescription": "NSMicrophoneUsageDescription"
+			},
+			"privacyManifests": {
+				"NSPrivacyAccessedAPITypes": [
+					{
+						"NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryUserDefaults",
+						"NSPrivacyAccessedAPITypeReasons": ["CA92.1"]
+					}
+				]
 			}
 		},
 		"android": {
@@ -40,7 +47,12 @@
 				"expo-build-properties",
 				{
 					"ios": {
-						"flipper": true
+						"flipper": false,
+						"newArchEnabled": true
+					},
+					"android": {
+						"flipper": false,
+						"newArchEnabled": true
 					}
 				}
 			],
